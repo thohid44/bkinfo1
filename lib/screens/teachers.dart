@@ -13,6 +13,9 @@ class _TeachersState extends State<Teachers> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          title: const Text("Library"),
+        ),
         body: StreamBuilder<QuerySnapshot>(
             stream:
                 FirebaseFirestore.instance.collection("library").snapshots(),
