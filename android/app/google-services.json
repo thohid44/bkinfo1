@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "350148619888",
+    "project_id": "bkinformfinal",
+    "storage_bucket": "bkinformfinal.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:350148619888:android:782ec98b803064f0808eb5",
+        "android_client_info": {
+          "package_name": "com.example.bkinform"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "350148619888-gk8s4rs5u4b13qpu5su5kd5a1shh6hef.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.bkinform",
+            "certificate_hash": "2e228aebdd33b3ac96118ec7329b14c6d6d6ae8e"
+          }
+        },
+        {
+          "client_id": "350148619888-l3mq47up1ngi43gogc2ocfskpivme4p9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfw9faPLkpMtQZSfL3c6a-WjTzZuQ-a5c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "350148619888-l3mq47up1ngi43gogc2ocfskpivme4p9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
