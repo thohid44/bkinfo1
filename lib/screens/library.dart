@@ -1,63 +1,44 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:bkinform/controller/library_c.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:get/state_manager.dart';
+import 'package:get/get.dart';
 
-class Library extends StatefulWidget {
-  const Library({Key? key}) : super(key: key);
-
-  @override
-  _LibraryState createState() => _LibraryState();
-}
-
-class _LibraryState extends State<Library> {
-  final CollectionReference _ref = FirebaseFirestore.instance.collection("web");
+class Library extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var con = Get.put(LibraryC());
+
     return SafeArea(
       child: Scaffold(
-        body: StreamBuilder<QuerySnapshot>(
-            stream:
-                FirebaseFirestore.instance.collection("library").snapshots(),
-            builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-              if (snapshot.hasError) {
-                return const Text('Something went wrong');
-              }
-
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(
-                    child: CircularProgressIndicator(color: Colors.red));
-              }
-
-              // return ListView(
-              //   children: snapshot.data!.docs.map((DocumentSnapshot document) {
-              //     Map<String, dynamic> data =
-              //         document.data()! as Map<String, dynamic>;
-              //     return ListTile(
-              //       title: Text(data['name']),
-              //       subtitle: Text(data['des']),
-              //     );
-              //   }).toList(),
-              // );
-
-              return ListView(
-                children: snapshot.data!.docs.map((DocumentSnapshot document) {
-                  Map<String, dynamic> data =
-                      document.data()! as Map<String, dynamic>;
-
-                  return ListTile(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => LibDetails(document)));
-                    },
-                    title: Card(
-                        child: Text(data['name'],
-                            style: const TextStyle(
-                                fontSize: 24, fontWeight: FontWeight.bold))),
-                  );
-                }).toList(),
-              );
-            }),
+        appBar: AppBar(
+          title: const Text("Libray"),
+        ),
+        body: Obx(
+          () => ListView.builder(
+            itemCount: con.libraryM.length,
+            itemBuilder: (context, index) => Card(
+              color: Colors.green,
+              child: Container(
+                alignment: Alignment.center,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text("Name: ${con.libraryM[index].name!}",
+                          style: const TextStyle(
+                              fontSize: 22, color: Colors.white)),
+                      Text("Expert: ${con.libraryM[index].location!}",
+                          style: const TextStyle(
+                              fontSize: 22, color: Colors.white)),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -71,30 +52,37 @@ class LibDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Column(
-          children: [
-            const SizedBox(
-              height: 23,
-            ),
-            Container(
-              height: 160,
-              child: Image.network(data['url']),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Card(
-              child: Column(
-                children: [
-                  Text(data['name']),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  Text(data['des']),
-                ],
+        body: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 23,
               ),
-            )
-          ],
+              Container(
+                height: 260,
+                child: Image.network(data['url']),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Card(
+                child: Column(
+                  children: [
+                    Text(data['name'],
+                        style: const TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold)),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Text(data['des'],
+                        style: const TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold)),
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

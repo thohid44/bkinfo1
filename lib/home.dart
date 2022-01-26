@@ -1,9 +1,8 @@
 import 'dart:async';
 
-import 'package:bkinform/auth/login.dart';
-import 'package:bkinform/screens/lainding.dart';
-import 'package:bkinform/screens/schools.dart';
+import 'package:bkinform/screens/landing.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -15,8 +14,8 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   void initState() {
     super.initState();
-    Timer(Duration(seconds: 3), () {
-      Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
+    Timer(const Duration(seconds: 8), () {
+      Get.to(LandingPage());
     });
   }
 
@@ -29,15 +28,23 @@ class _HomeState extends State<Home> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("Informative Boalkhali",
+                Container(
+                  alignment: Alignment.topCenter,
+                  height: 250,
+                  child: const Image(image: AssetImage('assets/bridge.jpg')),
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                const Text("Informative Boalkhali",
                     style: TextStyle(
                         fontSize: 29,
                         fontWeight: FontWeight.bold,
                         color: Colors.white)),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
-                CircularProgressIndicator(color: Colors.white)
+                const CircularProgressIndicator(color: Colors.white)
               ],
             ),
           )),

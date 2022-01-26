@@ -1,5 +1,5 @@
 import 'package:bkinform/auth/registration.dart';
-import 'package:bkinform/screens/lainding.dart';
+import 'package:bkinform/screens/landing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:firebase_auth/firebase_auth.dart';

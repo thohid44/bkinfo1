@@ -14,11 +14,11 @@ class _TeachersState extends State<Teachers> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("Library"),
+          title: const Text("Teachers"),
         ),
         body: StreamBuilder<QuerySnapshot>(
             stream:
-                FirebaseFirestore.instance.collection("library").snapshots(),
+                FirebaseFirestore.instance.collection("teachers").snapshots(),
             builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (snapshot.hasError) {
                 return const Text('Something went wrong');
@@ -29,24 +29,27 @@ class _TeachersState extends State<Teachers> {
                     child: CircularProgressIndicator(color: Colors.red));
               }
 
-              return GridView(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2),
+              return ListView(
                 children: snapshot.data!.docs.map((DocumentSnapshot document) {
                   Map<String, dynamic> data =
                       document.data()! as Map<String, dynamic>;
 
-                  return ListTile(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => TeacherDetails(document)));
-                    },
-                    title: Card(
-                        child: Text(data['name'],
-                            style: const TextStyle(
-                                fontSize: 24, fontWeight: FontWeight.bold))),
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ListTile(
+                      tileColor: Colors.purple,
+                      leading: const Icon(Icons.book, color: Colors.white),
+                      title: Text("Name: ${data['name']}",
+                          style: const TextStyle(
+                              fontSize: 20,
+                              color: Colors.white,
+                              fontWeight: FontWeight.normal)),
+                      subtitle: Text("Subject: ${data['des']}",
+                          style: const TextStyle(
+                              fontSize: 18,
+                              color: Colors.white,
+                              fontWeight: FontWeight.normal)),
+                    ),
                   );
                 }).toList(),
               );
@@ -64,30 +67,19 @@ class TeacherDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Column(
-          children: [
-            const SizedBox(
-              height: 23,
-            ),
-            Container(
-              height: 160,
-              child: Image.network(data['url']),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Card(
-              child: Column(
-                children: [
-                  Text(data['name']),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  Text(data['des']),
-                ],
+        body: Center(
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 23,
               ),
-            )
-          ],
+              Text(data['name']),
+              Text(data['des']),
+              const SizedBox(
+                height: 15,
+              ),
+            ],
+          ),
         ),
       ),
     );

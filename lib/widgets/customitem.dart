@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CustomItem extends StatelessWidget {
   final title;
@@ -10,19 +9,26 @@ class CustomItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-          border: Border.all(
-              width: 2, color: Colors.blue, style: BorderStyle.solid)),
+      decoration: const BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(20)),
+      ),
       child: Card(
+          color: Colors.purple,
+          elevation: 7,
           child: Column(
-        children: [
-          Text(
-            title,
-            style: GoogleFonts.lato(fontSize: 17),
-            textAlign: TextAlign.end,
-          ),
-        ],
-      )),
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Center(
+                child: Text(
+                  title,
+                  style: GoogleFonts.lato(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 25,
+                      color: Colors.white),
+                ),
+              ),
+            ],
+          )),
     );
   }
 }

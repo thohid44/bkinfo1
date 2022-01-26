@@ -1,81 +1,38 @@
+import 'package:bkinform/controller/school_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
-class School extends StatefulWidget {
-  @override
-  _SchoolState createState() => _SchoolState();
-}
+import 'package:get/get.dart';
 
-class _SchoolState extends State<School> {
-  String title = "School ";
+class School extends StatelessWidget {
+  //final GetxController c = Get.put(HomeController());
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    var controller = Get.put(SchoolController());
+    return SafeArea(
+        child: Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        title: const Text("School"),
       ),
-      body: StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance.collection("school").snapshots(),
-        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (snapshot.hasError) {
-            return const Text("Something went wrong");
-          }
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-                child: CircularProgressIndicator(color: Colors.red));
-          }
-
-          return ListView(
-            children: snapshot.data!.docs.map((DocumentSnapshot document) {
-              Map<String, dynamic> data =
-                  document.data()! as Map<String, dynamic>;
-              return ListTile(
-                title: Text(data['name']),
-                leading: const Icon(Icons.book, color: Colors.red, size: 50),
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => SchoolDetails(document)));
-                },
-              );
-            }).toList(),
-          );
-        },
-      ),
-    );
-  }
-}
-
-class SchoolDetails extends StatelessWidget {
-  final data;
-  SchoolDetails(this.data);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text("School Details")),
-      body: Center(
-        child: Column(
-          children: [
-            Expanded(
-              child: Container(
-                child: Image.network(data['img']),
-              ),
+      body: Obx(
+        () => ListView.builder(
+          itemCount: controller.eng.length,
+          itemBuilder: (context, index) => Card(
+            color: Color(0xff081029),
+            child: ListTile(
+              title: Text(controller.eng[index].name!,
+                  style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold)),
+              subtitle: Text(controller.eng[index].des!,
+                  style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold)),
             ),
-            SizedBox(
-              height: 15,
-            ),
-            Text(data['name']),
-            SizedBox(
-              height: 10,
-            ),
-          ],
+          ),
         ),
       ),
-    );
+    ));
   }
 }
-
-//  1. Create a project in Firebase 
-//  2. Intregrate or connect firebase with our Flutter Project 
